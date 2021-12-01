@@ -65,4 +65,4 @@ jobs:
           echo ${{ github.event.ref }}
           echo ${{ github.ref_name }}
           echo ${{ github.base_ref }}
-          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ IMAGE_TAG }}  --all
+          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}  --all
