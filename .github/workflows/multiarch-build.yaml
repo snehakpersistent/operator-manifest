@@ -3,7 +3,9 @@ on:
   push:
     branches:
       - ppc-support-test
-      - release_*
+  
+  release:
+    types: [published]
 
 env:
   IMAGE_TAG: latest
