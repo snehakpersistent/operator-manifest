@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - ppc-support-test
-      - release_*    
+  
+  release:  
 
 env:
   IMAGE_TAG: latest
@@ -61,8 +62,7 @@ jobs:
           
       - name: Push manifest
         run: |
-          echo ${{ github.event}}
-          echo ${{ github.event.ref }}
-          echo ${{ github.ref_name }}
-          echo ${{ github.base_ref }}
-          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}  --all
+          if ${{ github.event_name }} == push && ${{ github.ref_name }} == ppc-support-test; then
+            podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}  --all
+          else if ${{ github.event_name }} == release; then
+            podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}  --all
