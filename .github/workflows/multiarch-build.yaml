@@ -1,18 +1,12 @@
 name: Multiarch build
 on:
-  pull_request:
-    tags:
-      - pr-*
-
   push:
     branches:
       - ppc-support-test
-      - release_*
-    tags:
-      - latest
-      - v*      
+      - release_*    
 
 env:
+  IMAGE_TAG: latest
   IMAGE_NAME: operator-manifest
   IMAGE_REGISTRY: quay.io
   IMAGE_NAMESPACE: snehakpersistent
@@ -67,8 +61,8 @@ jobs:
           
       - name: Push manifest
         run: |
-          echo ${{ github}}
-          if ${{ github.event_name }} == "pull_request"; then
-            echo "pull_request";
-          fi
-          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ github.event.ref }}  --all
+          echo ${{ github.event}}
+          echo ${{ github.event.ref }}
+          echo ${{ github.ref_name }}
+          echo ${{ github.base_ref }}
+          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ IMAGE_TAG }}  --all
