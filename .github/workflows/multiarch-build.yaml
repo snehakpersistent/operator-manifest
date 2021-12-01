@@ -66,4 +66,9 @@ jobs:
           password: ${{ secrets.QUAY_PWD }}
           
       - name: Push manifest
-        run: podman manifest push ${{ env.IMAGE_NAME }}:${{ github.ref }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ github.ref }}  --all
+        run: |
+          echo ${{ github}}
+          if ${{ github.event_name }} == "pull_request"; then
+            echo "pull_request";
+          fi
+          podman manifest push ${{ env.IMAGE_NAME }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ github.ref }}  --all
