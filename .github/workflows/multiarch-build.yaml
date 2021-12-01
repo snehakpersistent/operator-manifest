@@ -2,7 +2,7 @@ name: Multiarch build
 on:
   pull_request:
     tags:
-      - pr-${{ github.event.number }}
+      - pr-*
 
   push:
     branches:
