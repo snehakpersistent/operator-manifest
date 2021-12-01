@@ -1,17 +1,25 @@
 name: Multiarch build
 on:
   pull_request:
+    tags:
+      - pr-${{ github.event.number }}
 
   push:
     branches:
-      - master
+      - ppc-support-test
+    tags:
+      - latest
+   
+  push:
+    branches:
       - release_*
+    tags:
+      - v*
 
 env:
-  IMAGE_TAG: multiarch
   IMAGE_NAME: operator-manifest
   IMAGE_REGISTRY: quay.io
-  IMAGE_NAMESPACE: containerbuildsystem
+  IMAGE_NAMESPACE: snehakpersistent
 
 jobs:
   build-multiarch-images:
@@ -62,4 +70,4 @@ jobs:
           password: ${{ secrets.QUAY_PWD }}
           
       - name: Push manifest
-        run: podman manifest push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}  --all
+        run: podman manifest push ${{ env.IMAGE_NAME }}:${{ github.ref }}  ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ github.ref }}  --all
