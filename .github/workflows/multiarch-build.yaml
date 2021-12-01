@@ -7,14 +7,10 @@ on:
   push:
     branches:
       - ppc-support-test
-    tags:
-      - latest
-   
-  push:
-    branches:
       - release_*
     tags:
-      - v*
+      - latest
+      - v*      
 
 env:
   IMAGE_NAME: operator-manifest
